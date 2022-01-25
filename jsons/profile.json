@@ -1,0 +1,11 @@
+{
+  "@meta": {
+    "ignore": true
+  },
+  "user":"$user",
+  "token":"",
+  "theme":5678,
+  "cache":"$cacheConfig",
+  "lastLogin":"",
+  "locale":""
+}
