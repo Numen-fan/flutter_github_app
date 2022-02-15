@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_github_app/common/Global.dart';
+import 'package:flutter_github_app/common/global.dart';
 import 'package:flutter_github_app/states/profile_view_model.dart';
 
 class ThemeViewModel extends ProfileViewModel {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github_app/net/git_network_util.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'common/Global.dart';
+import 'common/global.dart';
 import 'generated/l10n.dart';
 
 void main() {
-  Global.init();
   runApp(const MyApp());
 }
 
@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Global.init();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
 
   final String title;
@@ -46,10 +48,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String content = '';
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
+    Git().login("Numen-fan", "Numen_fan500").then((value) {
+      setState(() {
+        _counter++;
+        content = value.toString();
+        print(value);
+      });
+    }).catchError((e) {
+      setState(() {
+        _counter++;
+        content = e.toString();
+        print(e);
+      });
     });
   }
 
@@ -59,20 +72,23 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'You have pushed the button this many times:',
+              ),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              SizedBox(height: 20,),
 
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+              // Text(content)
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_github_app/common/Global.dart';
+import 'package:flutter_github_app/common/global.dart';
 import 'package:flutter_github_app/models/index.dart';
 
 class ProfileViewModel extends ChangeNotifier {

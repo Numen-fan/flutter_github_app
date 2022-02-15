@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_github_app/models/index.dart';
+import 'package:flutter_github_app/net/git_network_util.dart';
+import 'package:flutter_github_app/net/net_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// 存储一些全局变量
@@ -19,6 +21,8 @@ class Global {
   static late SharedPreferences _prefs; // 应该把SharedPreferences提出去
   static Profile profile = Profile(); // 登录的用户信息
 
+  static NetCache netCache = NetCache();
+
   static List<MaterialColor> get themes => _themes;
   
   // 是否是release版本
@@ -26,6 +30,7 @@ class Global {
 
   // 初始全局信息
   static Future<void> init() async {
+    // 必须在根 widget build中初始化，如果提前到 main 中会出现异常
     _prefs = await SharedPreferences.getInstance();
     String? _profileStr = _prefs.getString("profile");
     if (_profileStr != null) {
@@ -43,7 +48,7 @@ class Global {
       ..maxCount = 100;
 
     // 初始化网络请求相关配置
-    // Git.init() // 这个最好拿出去
+    Git.init(); // 这个最好拿出去
 
   }
 
